@@ -58,6 +58,11 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
       ...contextValue,
       ...useFirebaseAuth(), // eslint-disable-line react-hooks/rules-of-hooks
     };
+    /* } else if (process.env.REACT_APP_SET_AUTH === 'auth0') {
+    contextValue = {
+      ...contextValue,
+      ...useAuth0(), // eslint-disable-line react-hooks/rules-of-hooks
+    }; */
   } else if (process.env.REACT_APP_SET_AUTH === 'passcode') {
     contextValue = {
       ...contextValue,
@@ -67,6 +72,7 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
     contextValue = {
       ...contextValue,
       getToken: async (user_identity, room_name) => {
+        console.log('try to get access token');
         const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
 
         return fetch(endpoint, {
