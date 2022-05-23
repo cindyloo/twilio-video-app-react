@@ -6,7 +6,7 @@ import express, { RequestHandler } from 'express';
 import http from "http";
 const AccessToken = require("twilio").jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
-import uuidv4 from "uuidv4";
+const { v4: uuidv4 } = require("uuid");
 import path from 'path';
 var cors = require('cors')
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -73,7 +73,7 @@ const getAccessToken = (roomName) => {
     process.env.TWILIO_API_KEY_SID,
     process.env.TWILIO_API_KEY_SECRET,
     // generate a random unique identity for this participant
-    { identity: "00000000-0000-0000-0000-000000000001" }
+    { identity: uuidv4() }
   );
   // create a video grant for this specific room
   const videoGrant = new VideoGrant({
